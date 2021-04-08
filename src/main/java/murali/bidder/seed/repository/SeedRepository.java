@@ -8,4 +8,6 @@ import murali.bidder.seed.entity.Seed;
 @Repository
 public interface SeedRepository extends CassandraRepository<Seed, String> {
 
+	public Seed findBySid(String sid);
+
 }
