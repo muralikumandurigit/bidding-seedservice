@@ -87,6 +87,8 @@ public class SeedService {
 	public Seed saveSeed(Seed seed) {
 		checkForSeedValidity(seed);
 		seed.setSid(UUID.randomUUID().toString());
+		// Not yet started
+		seed.setStatus("N");
 		Bid bid = saveSeedBid(seed);
 		seed.setSeed_bid(bid.getBid());
 		try {
