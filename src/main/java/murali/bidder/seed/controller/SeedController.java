@@ -20,6 +20,16 @@ public class SeedController {
 	@Autowired
 	private SeedService seedService;
 	
+	/*
+	 * {
+  "cid" : "003795b6-f6fb-4616-91b1-ee64853fe071",
+  "start_date" : "2017-04-12 17:04:42",
+  "email" : "muralikumanduri@gmail.com",
+  "end_date" : "2017-04-12 17:04:42",
+  "increment" : true,
+  "seed_price" : 500
+}
+	 */
 	@PostMapping("/")
 	public Seed saveSeed(@RequestBody Seed seed) {
 		log.info("Saving seed " + seed.toString());
@@ -27,8 +37,14 @@ public class SeedController {
 	}
 	
 	@GetMapping("/{sid}")
-	public Boolean isValidSeed(@PathVariable String sid) {
+	public Seed getSeed(@PathVariable String sid) {
 		log.info("Validating seed " + sid);
-		return seedService.isValidSeed(sid);
+		return seedService.getSeed(sid);
+	}
+	
+	@PostMapping("/updatewinningbid")
+	public Seed updateWinningBid(@RequestBody Seed seed) {
+		log.info("Updating the winning bid");
+		return seedService.updateWinningBid(seed);
 	}
 }

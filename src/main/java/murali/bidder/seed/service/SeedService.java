@@ -13,13 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
-import lombok.extern.slf4j.Slf4j;
-import murali.bidder.seed.entity.Bid;
 import murali.bidder.seed.entity.Seed;
 import murali.bidder.seed.repository.SeedRepository;
 
 @Service
-@Slf4j
 public class SeedService {
 
 	@Autowired
@@ -89,30 +86,14 @@ public class SeedService {
 		seed.setSid(UUID.randomUUID().toString());
 		// Not yet started
 		seed.setStatus("N");
-		Bid bid = saveSeedBid(seed);
-		seed.setSeed_bid(bid.getBid());
-		try {
-			return seedRepository.save(seed);
-		}
-		catch(Exception e) {
-			// Delete the seed bid
-			restTemplate.delete(bidServiceEndpoint + "deletebid/" + bid.getBid());
-			throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Exception occurred while saving seed " + seed.getCid() + " with error " + e.getLocalizedMessage());
-		}
+		return seedRepository.save(seed);
 	}
-	
-	private Bid saveSeedBid(Seed seed) {
-		Bid bid = new Bid();
-		bid.setEmail(seed.getEmail());
-		log.info("seed price = " + seed.getSeed_price());
-		bid.setNew_price(seed.getSeed_price());
-		bid.setSid(seed.getSid());
-		log.info("seed info " + seed.toString());
-		log.info("Saving seed bid " + bid.toString());
-		return restTemplate.postForObject(bidServiceEndpoint + "seedbid", bid, Bid.class);
+
+	public Seed getSeed(String sid) {
+		return seedRepository.findBySid(sid);
 	}
-	
-	public Boolean isValidSeed(String sid) {
-		return seedRepository.findBySid(sid) == null ? false : true;
+
+	public Seed updateWinningBid(Seed seed) {
+		return seedRepository.save(seed);
 	}
 }

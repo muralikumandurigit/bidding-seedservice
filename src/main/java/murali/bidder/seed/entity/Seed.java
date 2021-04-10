@@ -1,12 +1,10 @@
 package murali.bidder.seed.entity;
 
-import java.util.Date;
-
+import java.time.LocalDateTime;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
@@ -30,12 +28,12 @@ public class Seed {
 	private String email;
 	
 	@Column
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss.SSS")
-	private Date start_date;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime start_date;
 	
 	@Column
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss.SSS")
-	private Date end_date;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime end_date;
 	
 	@Column
 	private Boolean increment;
